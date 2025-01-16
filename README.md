@@ -9,7 +9,7 @@ pip install -r requirements.txt
 ```
 
 - В корень проекта распаковываешь игрушечный диск М, чтобы был вид  
-database_merger/
+database_merger/  
 └── M/  
     └── Количественные исследования/  
         ├── рег1  
