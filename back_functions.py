@@ -73,7 +73,7 @@ def find_reg_base(directory, reg_id):
 def create_setting_df(path_to_dir):
 
     if not validations_funcs.validate_folder(path_to_dir):
-        st.error(f"Ошибка - папки с таким название не существует: {path_to_dir}")
+        st.error(f"Внимание: База не подлита! Ошибка - папки с таким название не существует: {path_to_dir}")
         return None
 
     # path_to_sav = find_latest_base(path_to_dir)
@@ -211,7 +211,7 @@ def merge_bases(etln_reg: int, project_name: str, settings):
                     var_label_match = [k for k, v in reg_meta.var_names_to_labels.items() if v.strip().lower()==res_v_label]
 
                 if (not var_label_match) and (res_meta.q_type[res_var] not in {"technical", "weight"}):
-                    e = f"Ошибка - нет соответствия по метке переменной для переменной {res_var} '{res_v_label}' в базе `{reg_i}.sav`"
+                    e = f"База подлита не полностью! Ошибка - нет соответствия по метке переменной для переменной {res_var} '{res_v_label}' в базе `{reg_i}.sav`"
                     log_content += '\n' + e
                     st.error(e)
                     continue
