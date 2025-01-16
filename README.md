@@ -8,7 +8,7 @@ git clone https://github.com/Jajamesi/database_merger.git
 pip install -r requirements.txt
 ```
 
-- В корень проекта распаковываешь игрушечный диск М, чтобы был вид
+- В корень проекта распаковываешь игрушечный диск М, чтобы был вид  
 database_merger/
 └── M/  
     └── Количественные исследования/  
