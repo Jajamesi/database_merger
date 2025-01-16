@@ -1,10 +1,15 @@
-import six
 import streamlit as st
 sss = st.session_state
 
 import constants
 import front_functions
 import back_functions
+
+import collections.abc
+import sys
+if not hasattr(collections, 'Iterable'):
+    collections.Iterable = collections.abc.Iterable
+import savReaderWriter
 
 st.set_page_config(layout="wide")
 
@@ -30,13 +35,30 @@ with st.container(
         placeholder="Выберите регион"
     )
 
-    if etln_reg:
+    if etln_reg and project_name:
         with st.form("form"):
             st.subheader("Выставьте настройки и запускайте")
             etln_settings_df = front_functions.create_etln_settings(etln_reg, project_name)
-            launched = st.form_submit_button("Запустить объединение")
+            merge_new = st.checkbox(
+                label="Добавлять новые переменные в базу",
+                help="Если выставлено, робот будет подливать в базу переменные, которые нашел в региональной базе, но их нет в эталоне. К переменной добавится префикс региона, где в первый раз ее нашли.",
+                key="merge_new",
+                value=False
+            )
+
+            launched = st.form_submit_button("Запустить объединение", disabled=etln_settings_df.empty)
 
         if launched:
+            with st.sidebar:
+                st.subheader("Статус")
+
             etln_settings_df = etln_settings_df.set_index("vars", drop=True)
+            # etln_settings_df = etln_settings_df[etln_settings_df["include"]]
+
+            placeholder = st.empty()
+
             # etln_settings_dict = etln_settings_df.to_dict(orient='index')
             back_functions.merge_bases(etln_reg, project_name, etln_settings_df)
+
+            placeholder.success("Объединение завершено")
+
